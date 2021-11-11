@@ -1,0 +1,13 @@
+---
+- name: My test Playbook
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: copy file
+    copy:
+      src: /home/sumeetadmin/index.html
+      dest: /home/sumeetadmin/test_index.html
+      owner: sumeetadmin
+      group: sumeetadmin
+      mode: 0644

@@ -1,0 +1,10 @@
+---
+- name: My test Playbook
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: copy file
+    yum:
+      name: git
+      state: installed

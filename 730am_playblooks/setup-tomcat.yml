@@ -1,0 +1,38 @@
+---
+- name: setup tomcat
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: Install Java on RedHat
+    yum:
+      name: java
+      state: installed
+    when: ansible_os_family == "RedHat"
+
+  - name: Install Java on Debian
+    yum:
+      name: default-jdk
+      state: present
+    when: ansible_os_family == "Debian"
+
+  - name: Download Tomcat
+    get_url: 
+      url: https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.72/bin/apache-tomcat-8.5.72.tar.gz
+      dest: /opt
+
+  - name: Extracting Tomcat
+    unarchive: 
+      src: /opt/apache-tomcat-8.5.72.tar.gz
+      dest: /opt
+      remote_src: yes
+
+  - name: Change Permissions
+    file:
+      path: /opt/apache-tomcat-8.5.72/bin/startup.sh
+      mode: 0777
+
+  - name: Start Tomcat
+    shell: nohup ./startup.sh
+    args: 
+      chdir: /opt/apache-tomcat-8.5.72/bin

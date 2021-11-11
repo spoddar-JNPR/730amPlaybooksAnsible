@@ -1,0 +1,10 @@
+---
+- name: My test Playbook
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: creating a file
+    file:
+      path: /home/sumeetadmin/demofile
+      state: touch
